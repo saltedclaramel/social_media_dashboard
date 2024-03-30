@@ -1,38 +1,82 @@
 .App {
   text-align: center;
+  height: 100vh;
+  padding: 5%
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+  text-align: left;
+  display: grid;
+  grid-template-rows: 2fr 1fr;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.header_name{
+  margin-top: auto;
+  font-weight: 700;
+  font-size: 2.8rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.header_detail{
+  margin-bottom: auto;
+  font-weight: 500;
+  color: rgb(85, 85, 85);
+}
+
+.handle{
+  font-weight: 500;
+  color: rgb(85, 85, 85);
+  font-size: small;
+  margin-left: 0.3rem;
+}
+
+.follower_section{
+  margin-top: 2rem;
+}
+
+.follower_card {
+  display: grid;
+  grid-template-rows: 1fr 5fr 1fr;
+  width: 18rem;
+  background-color: rgb(245, 245, 245);
+  padding: 2rem 0rem;
+  margin: 1rem;
+  border-radius: 3%;
+  /* position: relative */
+}
+
+.count_container {
+  /* margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%); */
+  display: grid;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* justify-content: center; */
 }
 
-.App-link {
-  color: #61dafb;
+.follower_count {
+  margin-top: auto;
+  font-weight: 700;
+  font-size: 2.7rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.follower_subtext{
+  margin-bottom: auto;
+  font-size: medium;
+  font-weight: 300;
+}
+
+.change_count_pos{
+    font-weight: 500;
+    color: rgb(47, 184, 20);
+    font-size: small;
+    margin-left: 0.3rem;
+}
+
+.change_count_neg {
+    font-weight: 500;
+    color: rgb(184, 20, 20);
+    font-size: small;
+    margin-left: 0.3rem;
 }
