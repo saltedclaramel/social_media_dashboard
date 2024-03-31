@@ -28,9 +28,12 @@
   font-size: small;
   margin-left: 0.3rem;
 }
-
-.follower_section{
-  margin-top: 2rem;
+.social_icon{
+  width: 12px;
+  height: 12px;
+  text-align: right;
+}
+.follower_section, .metric_section{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
@@ -43,18 +46,11 @@
   padding: 2rem 0rem;
   margin: 1rem;
   border-radius: 3%;
-  /* position: relative */
 }
 
 .count_container {
-  /* margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%); */
   display: grid;
   align-items: center;
-  /* justify-content: center; */
 }
 
 .follower_count {
@@ -69,6 +65,11 @@
   font-weight: 300;
 }
 
+.change{
+  margin: 0.5rem 3rem 0 0;
+  text-align: right;
+}
+
 .change_count_pos{
     font-weight: 500;
     color: rgb(47, 184, 20);
@@ -81,4 +82,37 @@
     color: rgb(184, 20, 20);
     font-size: small;
     margin-left: 0.3rem;
+}
+.overview_header{
+  text-align: left;
+  margin-top: 0.5rem;
+  color: rgb(85, 85, 85);
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+.metric_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+  width: 16rem;
+  background-color: rgb(245, 245, 245);
+  padding: 2rem 0rem;
+  margin: 1rem;
+  border-radius: 3%;
+}
+
+.metric_name{
+  font-weight: 500;
+  color: rgb(85, 85, 85);
+  font-size: small;
+  text-align: left;
+  margin-left: 2rem;
+}
+
+.metric_count {
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: left;
+  margin-left: 2rem;
 }
