@@ -1,6 +1,7 @@
 import { Component } from "react";
 import FollowerCard from "../components/FollowerCard";
 import MetricCard from "../components/MetricCard";
+import FollowerPlot from "../components/FollowerPlot";
 
 class Dashboard extends Component{
     constructor(props){
@@ -89,7 +90,13 @@ class Dashboard extends Component{
                         />
                     )}
                 </div>
-
+                <div className="visualisations_header">Matplotlib Visualisations</div>
+                <div className="visualisations_section">
+                    <div>
+                        <FollowerPlot/>
+                    </div>
+                    <div></div>
+                </div>
             </div>
         )
     }

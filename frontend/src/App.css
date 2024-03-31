@@ -83,7 +83,7 @@
     font-size: small;
     margin-left: 0.3rem;
 }
-.overview_header{
+.overview_header, .visualisations_header{
   text-align: left;
   margin-top: 0.5rem;
   color: rgb(85, 85, 85);
@@ -115,4 +115,9 @@
   font-size: 2rem;
   text-align: left;
   margin-left: 2rem;
+}
+
+.visualisations_section{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
