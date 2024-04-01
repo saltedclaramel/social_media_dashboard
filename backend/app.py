@@ -1,8 +1,11 @@
-from flask import Flask, send_file
+from flask import Flask, send_file, jsonify
 from flask_cors import CORS  # Import CORS from flask_cors
 
 import matplotlib
 matplotlib.use('Agg')  # Set the backend to Agg before importing pyplot
+
+import os
+import json
 
 import matplotlib.pyplot as plt
 import io
@@ -10,22 +13,33 @@ import io
 app = Flask(__name__)
 CORS(app)  # Add CORS to your Flask app
 
+def read_data():
+    json_file_path = os.path.join(app.root_path, 'static', 'data.json')
+    with open(json_file_path, 'r') as file:
+        data = json.load(file)
+    return data
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
 
+@app.route('/data')
+def get_data():
+    data = read_data()
+    return jsonify(data)
+
 @app.route('/followerPlot')
 def generate_plot():
 
-    data = {'FB':12, 'Twitter':99, 'IG':1099, 'YT':-144}
-    courses = list(data.keys())
-    values = list(data.values())
-    
+    data = read_data()
+    socials = [social['social'] for social in data['socials']]
+    values = [social['changeCount'] for social in data['socials']]
+
     fig = plt.figure(figsize = (5.5, 3.8))
     
     colors = ['red' if (x<0) else 'green' for x in values]
     # creating the bar plot
-    plt.bar(courses, values, color=colors, width = 0.4)
+    plt.bar(socials, values, color=colors, width = 0.4)
     
     plt.xlabel("Socials")
     plt.ylabel("Change in no. of followers")

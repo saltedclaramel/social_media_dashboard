@@ -7,97 +7,119 @@ class Dashboard extends Component{
     constructor(props){
         super(props);
         this.state = {
-            socials: [
-                        {'social':'/icon-facebook.svg', 'handle': '@nathanf', 'followerCount': '1987', 'changeCount': 12, 'change': 'pos'},
-                        {'social':'/icon-twitter.svg', 'handle': '@nathanf', 'followerCount': '1004', 'changeCount': 99, 'change': 'pos'},
-                        {'social':'/icon-instagram.svg', 'handle': '@realnathanf', 'followerCount': '11k', 'changeCount': 1099, 'change': 'pos'},
-                        {'social':'/icon-youtube.svg', 'handle': 'Nathan F.', 'followerCount': '8239', 'changeCount': 144, 'change': 'neg'}
-                    ],
-            fbMetrics: [
-                {'social': '/icon-facebook.svg', 'metric': 'Page Views', 'metricValue': '87', 'changeCount': '3%', 'change': 'pos'},
-                {'social': '/icon-facebook.svg', 'metric': 'Likes', 'metricValue': '52', 'changeCount': '2%', 'change': 'neg'}
-            ],
-            igMetrics: [
-                {'social': '/icon-instagram.svg', 'metric': 'Likes', 'metricValue': '5462', 'changeCount': '2257%', 'change': 'pos'},
-                {'social': '/icon-instagram.svg', 'metric': 'Profile Views', 'metricValue': '52k', 'changeCount': '1375%', 'change': 'pos'}
-            ],
-            twitterMetrics: [
-                {'social': '/icon-twitter.svg', 'metric': 'Retweets', 'metricValue': '117', 'changeCount': '303%', 'change': 'pos'},
-                {'social': '/icon-twitter.svg', 'metric': 'Likes', 'metricValue': '507', 'changeCount': '553%', 'change': 'pos'}
-            ],
-            ytMetrics: [
-                {'social': '/icon-youtube.svg', 'metric': 'Likes', 'metricValue': '107', 'changeCount': '19%', 'change': 'neg'},
-                {'social': '/icon-youtube.svg', 'metric': 'Total Views', 'metricValue': '1407', 'changeCount': '12%', 'change': 'neg'}
-            ]
+            socials: [],
+            fbMetrics: [],
+            igMetrics: [],
+            twitterMetrics: [],
+            ytMetrics: [],
+            error: null
         }
     }
+    componentDidMount() {
+        this.fetchData();
+      }
+    
+      fetchData = async () => {
+        try {
+          const response = await fetch('http://127.0.0.1:5000/data');
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const jsonData = await response.json();
+          this.setState({ 
+            socials: jsonData.socials,
+            fbMetrics: jsonData.fbMetrics,
+            igMetrics: jsonData.igMetrics,
+            twitterMetrics: jsonData.twitterMetrics,
+            ytMetrics: jsonData.ytMetrics
+
+         });
+
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          this.setState({ error: "Failed to fetch data. Please try again later." });
+        }
+      };
+    
     render(){
+        const { socials, fbMetrics, igMetrics, twitterMetrics, ytMetrics, error } = this.state;
         return(
             <div>
-                <div className="header">
-                    <div className="header_name">Social Media Dashboard</div>
-                    <div className="header_detail">Total Followers: 23,004</div>
-                </div>
-
-                <div className="follower_section">
-                    {this.state.socials.map((social) => 
-                        <FollowerCard 
-                        icon = {social['social']}
-                        handle = {social['handle']} 
-                        followerCount = {social['followerCount']} 
-                        changeCount = {social['changeCount']}
-                        change = {social['change']}
-                        />
-                    )}
-                </div>
-
-                <div className="overview_header">Overview - Today</div>
-                <div className="metric_section">
-                    {this.state.fbMetrics.map((metric) =>
-                        <MetricCard 
-                        metric = {metric['metric']}
-                        icon = {metric['social']}
-                        metricValue = {metric['metricValue']}
-                        changeCount = {metric['changeCount']}
-                        change = {metric['change']}
-                        />
-                    )}
-                    {this.state.igMetrics.map((metric) =>
-                        <MetricCard 
-                        metric = {metric['metric']}
-                        icon = {metric['social']}
-                        metricValue = {metric['metricValue']}
-                        changeCount = {metric['changeCount']}
-                        change = {metric['change']}
-                        />
-                    )}
-                    {this.state.twitterMetrics.map((metric) =>
-                        <MetricCard 
-                        metric = {metric['metric']}
-                        icon = {metric['social']}
-                        metricValue = {metric['metricValue']}
-                        changeCount = {metric['changeCount']}
-                        change = {metric['change']}
-                        />
-                    )}
-                    {this.state.ytMetrics.map((metric) =>
-                        <MetricCard 
-                        metric = {metric['metric']}
-                        icon = {metric['social']}
-                        metricValue = {metric['metricValue']}
-                        changeCount = {metric['changeCount']}
-                        change = {metric['change']}
-                        />
-                    )}
-                </div>
-                <div className="visualisations_header">Matplotlib Visualisations</div>
-                <div className="visualisations_section">
-                    <div>
-                        <FollowerPlot/>
-                    </div>
-                    <div></div>
-                </div>
+        {error ? (
+          <div>{error}</div>
+        ) : (
+          <>
+            <div className="header">
+              <div className="header_name">Social Media Dashboard</div>
+              <div className="header_detail">Total Followers: 23,004</div>
             </div>
+
+            <div className="follower_section">
+              {socials.map((social, index) => (
+                <FollowerCard
+                  key={index}
+                  icon={social.icon}
+                  handle={social.handle}
+                  followerCount={social.followerCount}
+                  changeCount={social.changeCount}
+                  change={social.change}
+                />
+              ))}
+            </div>
+
+            <div className="overview_header">Overview - Today</div>
+            <div className="metric_section">
+              {fbMetrics.map((metric, index) => (
+                <MetricCard
+                  key={index}
+                  metric={metric.metric}
+                  icon={metric.social}
+                  metricValue={metric.metricValue}
+                  changeCount={metric.changeCount}
+                  change={metric.change}
+                />
+              ))}
+              {igMetrics.map((metric, index) => (
+                <MetricCard
+                  key={index}
+                  metric={metric.metric}
+                  icon={metric.social}
+                  metricValue={metric.metricValue}
+                  changeCount={metric.changeCount}
+                  change={metric.change}
+                />
+              ))}
+              {twitterMetrics.map((metric, index) => (
+                <MetricCard
+                  key={index}
+                  metric={metric.metric}
+                  icon={metric.social}
+                  metricValue={metric.metricValue}
+                  changeCount={metric.changeCount}
+                  change={metric.change}
+                />
+              ))}
+              {ytMetrics.map((metric, index) => (
+                <MetricCard
+                  key={index}
+                  metric={metric.metric}
+                  icon={metric.social}
+                  metricValue={metric.metricValue}
+                  changeCount={metric.changeCount}
+                  change={metric.change}
+                />
+              ))}
+            </div>
+          </>
+        )}
+        <div className="visualisations_header">Matplotlib Visualisations</div>
+        <div className="visualisations_section">
+            <div>
+                <FollowerPlot/>
+            </div>
+            <div></div>
+        </div>
+      </div>
         )
     }
 }
